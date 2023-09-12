@@ -5,6 +5,9 @@
 	/* outline: 1px solid red; */
 	font-family: Arial, Helvetica, sans-serif;
 }
+body {
+	overflow: hidden;
+}
 #gameCanvas {
 	background-color: #70c5ce;
 }
@@ -16,4 +19,34 @@
 	height: 100%;
 	position: absolute;
 	display: none;
+	place-items: center;
+	color: white;
+	backdrop-filter: blur(2px);
+	user-select: none;
+}
+.game_over .message{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.game_over .message .over{
+	font-size: 3rem;
+}
+.game_over .message .replay{
+	font-size: 1.5rem;
+	display: flex;
+	gap: 10px;
+}
+.game_over .message img{
+	width: 1rem;
+}
+.scores_table{
+	position: absolute;
+	display: block;
+	font-size: 1rem;
+	color: white;
+	display: flex;
+	gap: 3px;
+	padding: 3px;
+	user-select: none;
 }

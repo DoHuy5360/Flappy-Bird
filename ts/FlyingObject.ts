@@ -6,6 +6,7 @@ export class FlyingObject {
 	public gravity: number;
 	public velocity: number;
 	public initialJumpHeight: number;
+	public color: string;
 	constructor(
 		x: number,
 		y: number,
@@ -13,7 +14,8 @@ export class FlyingObject {
 		height: number,
 		gravity: number,
 		velocity: number,
-		initialJumpHeight: number
+		initialJumpHeight: number,
+		color: string
 	) {
 		this.x = x;
 		this.y = y;
@@ -22,6 +24,7 @@ export class FlyingObject {
 		this.gravity = gravity;
 		this.velocity = velocity;
 		this.initialJumpHeight = initialJumpHeight;
+		this.color = color
 	}
 
 	update(canvas: HTMLCanvasElement) {
@@ -51,7 +54,7 @@ export class FlyingObject {
 	}
 
 	draw(context: CanvasRenderingContext2D) {
-		context.fillStyle = "yellow";
+		context.fillStyle = this.color;
 		context.fillRect(this.x, this.y, this.width, this.height);
 	}
 }

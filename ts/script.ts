@@ -8,7 +8,7 @@ const canvasDom = document.getElementById("gameCanvas") as HTMLCanvasElement;
 const canvas = new Canvas(
 	canvasDom, //* dom
 	window.innerWidth, //* width
-	400 //* height
+	window.innerHeight //* height
 );
 
 const bird = new Bird(
@@ -18,7 +18,8 @@ const bird = new Bird(
 	30, //* height
 	1, //* gravity
 	0, //* velocity
-	-15 //* initialJumpHeight
+	-15, //* initialJumpHeight
+	"yellow" //* color
 );
 
 let isGameOver = false;
@@ -26,15 +27,16 @@ let pipes: Pipe[] = [];
 
 setInterval(() => {
 	const gap = 300;
-	const botColHeight = Math.floor((Math.random() * canvas.height) / 2 + 20);
-	const topColHeight = canvas.height - botColHeight - gap;
+	const topColHeight = Math.floor((Math.random() * canvas.height) / 2 + 20);
+	const botColHeight = canvas.height - topColHeight - gap;
 	const topPipe = new Pipe(
 		canvas.width, //* x
 		0, //* y
 		50, //* width
 		topColHeight, //* height
 		2, //* speed
-		"top" //* location
+		"top", //* location
+		"green" //* color
 	);
 	const botPipe = new Pipe(
 		canvas.width, //* x
@@ -42,23 +44,37 @@ setInterval(() => {
 		50, //* width
 		botColHeight, //* height
 		2, //* speed
-		"bottom" //* location
+		"bottom", //* location
+		"green" //* color
 	);
 	pipes.push(topPipe, botPipe);
 }, 2000);
 
+function handleGameOver() {
+	bird.update(canvas.dom);
+	bird.draw(canvas.context);
+	isGameOver = true;
+	gameOver.style.display = "grid";
+}
+let scores: number = 0;
+const score = document.querySelector(".score") as HTMLDivElement;
 function updateGame() {
 	canvas.clearScreen();
 
 	for (var i = 0; i < pipes.length; i++) {
 		var p = pipes[i];
+		p.draw(canvas.context);
 
-		p.x -= p.speed;
+		p.backLeft();
 
 		//todo: Track pipe is out of frame then remove from array
 		if (p.x + p.width < 0) {
 			pipes.splice(i, 1);
 			i--;
+		}
+		if (bird.x >= p.x + p.width && bird.x + bird.width <= p.x + p.width + bird.width + 1) {
+			scores += 0.5;
+			score.textContent = scores.toString();
 		}
 		//todo: Track bird is collide the pipe
 		if (
@@ -67,14 +83,12 @@ function updateGame() {
 		) {
 			if (p.location === "top" && bird.y < p.height) {
 				console.log("Hiting top");
-				isGameOver = true;
-				gameOver.style.display = "block";
+				handleGameOver();
 				return;
 			}
 			if (p.location === "bottom" && bird.y + bird.height > p.y) {
 				console.log("Hiting bottom");
-				isGameOver = true;
-				gameOver.style.display = "block";
+				handleGameOver();
 				return;
 			}
 		}
@@ -83,17 +97,13 @@ function updateGame() {
 	bird.update(canvas.dom);
 	bird.draw(canvas.context);
 
-	for (var i = 0; i < pipes.length; i++) {
-		var p = pipes[i];
-		canvas.context.fillStyle = "green";
-		canvas.context.fillRect(p.x, p.y, p.width, p.height);
-	}
-
 	requestAnimationFrame(updateGame);
 }
 document.addEventListener("keydown", function (event) {
 	if (event.key === "ArrowUp") {
 		if (isGameOver) {
+			scores = 0;
+			score.textContent = "0"
 			pipes = [];
 			bird.y = canvas.height / 2;
 			bird.velocity = 0;
