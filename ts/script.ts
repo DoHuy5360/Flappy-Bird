@@ -3,12 +3,12 @@ import { Canvas } from "./Canvas.js";
 import { Pipe } from "./Pipe.js";
 
 const gameOver: HTMLDivElement = document.querySelector(".game_over") as HTMLDivElement;
-
+const groundHeight = 30;
 const canvasDom = document.getElementById("gameCanvas") as HTMLCanvasElement;
 const canvas = new Canvas(
 	canvasDom, //* dom
 	window.innerWidth, //* width
-	window.innerHeight //* height
+	window.innerHeight - groundHeight //* height
 );
 
 const bird = new Bird(
@@ -19,7 +19,8 @@ const bird = new Bird(
 	1, //* gravity
 	0, //* velocity
 	-15, //* initialJumpHeight
-	"yellow" //* color
+	"yellow", //* color
+	"angryBird.svg" //* imagePath
 );
 
 let isGameOver = false;
@@ -27,7 +28,8 @@ let pipes: Pipe[] = [];
 
 setInterval(() => {
 	const gap = 300;
-	const topColHeight = Math.floor((Math.random() * canvas.height) / 2 + 20);
+	// const topColHeight = Math.floor((Math.random() * canvas.height) / 2 + 20);
+	const topColHeight = Math.floor(Math.random() * Math.floor(canvas.height / 50)) * 50;
 	const botColHeight = canvas.height - topColHeight - gap;
 	const topPipe = new Pipe(
 		canvas.width, //* x
@@ -36,7 +38,8 @@ setInterval(() => {
 		topColHeight, //* height
 		2, //* speed
 		"top", //* location
-		"green" //* color
+		"green", //* color
+		"log_04.png" //* imagePath
 	);
 	const botPipe = new Pipe(
 		canvas.width, //* x
@@ -45,16 +48,19 @@ setInterval(() => {
 		botColHeight, //* height
 		2, //* speed
 		"bottom", //* location
-		"green" //* color
+		"green", //* color
+		"log_04.png" //* imagePath
 	);
 	pipes.push(topPipe, botPipe);
 }, 2000);
-
+const grounds = document.querySelectorAll(".ground");
 function handleGameOver() {
 	bird.update(canvas.dom);
 	bird.draw(canvas.context);
 	isGameOver = true;
 	gameOver.style.display = "grid";
+	grounds[0].classList.add("stop");
+	grounds[1].classList.add("stop");
 }
 let scores: number = 0;
 const score = document.querySelector(".score") as HTMLDivElement;
@@ -99,17 +105,22 @@ function updateGame() {
 
 	requestAnimationFrame(updateGame);
 }
+function handleReplay() {
+	scores = 0;
+	score.textContent = "0";
+	pipes = [];
+	bird.y = canvas.height / 2;
+	bird.velocity = 0;
+	updateGame();
+	isGameOver = false;
+	gameOver.style.display = "none";
+	grounds[0].classList.remove("stop");
+	grounds[1].classList.remove("stop");
+}
 document.addEventListener("keydown", function (event) {
 	if (event.key === "ArrowUp") {
 		if (isGameOver) {
-			scores = 0;
-			score.textContent = "0"
-			pipes = [];
-			bird.y = canvas.height / 2;
-			bird.velocity = 0;
-			updateGame();
-			isGameOver = false;
-			gameOver.style.display = "none";
+			handleReplay();
 		}
 		bird.jump();
 	}

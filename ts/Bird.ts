@@ -9,8 +9,9 @@ export class Bird extends FlyingObject {
 		gravity: number,
 		velocity: number,
 		initialJumpHeight: number,
-		color: string
+		color: string,
+		image: string
 	) {
-		super(x, y, width, height, gravity, velocity, initialJumpHeight, color);
+		super(x, y, width, height, gravity, velocity, initialJumpHeight, color, image);
 	}
 }

@@ -9,10 +9,14 @@ body {
 	overflow: hidden;
 }
 #gameCanvas {
-	background-color: #70c5ce;
+	background-image: url(./imgs/objects/backgrounds/skys/sky.jpg);
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
 }
 .wrap_frame {
 	position: relative;
+	height: 100vh;
 }
 .game_over {
 	width: 100%;
@@ -23,24 +27,26 @@ body {
 	color: white;
 	backdrop-filter: blur(2px);
 	user-select: none;
+	z-index: 2;
 }
-.game_over .message{
+.game_over .message {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	filter: drop-shadow(0 0.125rem 0.25rem #1b1b1bc8);
 }
-.game_over .message .over{
+.game_over .message .over {
 	font-size: 3rem;
 }
-.game_over .message .replay{
+.game_over .message .replay {
 	font-size: 1.5rem;
 	display: flex;
 	gap: 10px;
 }
-.game_over .message img{
+.game_over .message img {
 	width: 1rem;
 }
-.scores_table{
+.scores_table {
 	position: absolute;
 	display: block;
 	font-size: 1rem;
@@ -49,4 +55,31 @@ body {
 	gap: 3px;
 	padding: 3px;
 	user-select: none;
+	z-index: 3;
+	filter: drop-shadow(0 0.125rem 0.25rem #1b1b1bc8);
+}
+.ground {
+	position: absolute;
+	width: 100%;
+	height: 35px;
+	bottom: 0;
+	z-index: 1;
+	background-image: url(./imgs/objects/backgrounds/grounds/ground_01.png);
+	background-size: contain;
+	background-repeat: repeat;
+	animation: move-back 10000ms infinite linear;
+}
+.ground.stop {
+	animation: unset;
+}
+.next_ground {
+	left: 100%;
+}
+@keyframes move-back {
+	from {
+		transform: translateX(0%);
+	}
+	to {
+		transform: translateX(-100%);
+	}
 }

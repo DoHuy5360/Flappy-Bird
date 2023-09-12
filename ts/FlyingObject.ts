@@ -7,6 +7,8 @@ export class FlyingObject {
 	public velocity: number;
 	public initialJumpHeight: number;
 	public color: string;
+	public imagePath: string;
+	public image: HTMLImageElement;
 	constructor(
 		x: number,
 		y: number,
@@ -15,7 +17,8 @@ export class FlyingObject {
 		gravity: number,
 		velocity: number,
 		initialJumpHeight: number,
-		color: string
+		color: string,
+		imagePath: string
 	) {
 		this.x = x;
 		this.y = y;
@@ -24,7 +27,10 @@ export class FlyingObject {
 		this.gravity = gravity;
 		this.velocity = velocity;
 		this.initialJumpHeight = initialJumpHeight;
-		this.color = color
+		this.color = color;
+		this.imagePath = imagePath;
+		this.image = new Image();
+		this.image.src = "./imgs/objects/flyings/" + this.imagePath;
 	}
 
 	update(canvas: HTMLCanvasElement) {
@@ -55,6 +61,6 @@ export class FlyingObject {
 
 	draw(context: CanvasRenderingContext2D) {
 		context.fillStyle = this.color;
-		context.fillRect(this.x, this.y, this.width, this.height);
+		context.drawImage(this.image, this.x, this.y, this.width, this.height);
 	}
 }

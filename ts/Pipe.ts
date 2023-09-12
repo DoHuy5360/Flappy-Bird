@@ -8,8 +8,9 @@ export class Pipe extends ObstructionObject {
 		height: number,
 		speed: number,
 		location: string,
-		color: string
+		color: string,
+		imagePath: string,
 	) {
-		super(x, y, width, height, speed, location, color);
+		super(x, y, width, height, speed, location, color, imagePath);
 	}
 }
