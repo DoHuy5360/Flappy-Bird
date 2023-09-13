@@ -4,12 +4,14 @@ import { GroundE } from "./entities/obstruction/GroundE.js";
 import { PipeE } from "./entities/obstruction/PipeE.js";
 import { PlantE } from "./entities/obstruction/PlantE.js";
 import { ScoreE } from "./entities/widget/ScoreE.js";
+import { ControllE } from "./entities/widget/ControllE.js";
 const gameOver = document.querySelector(".game_over");
 const groundHeight = 30;
 const canvasDom = document.getElementById("gameCanvas");
 const canvas = new Canvas(canvasDom, window.innerWidth, window.innerHeight - groundHeight);
 const birdE = new BirdE(canvas);
 const bird = birdE.getBird();
+const controllE = new ControllE();
 const scoreDom = document.querySelector(".score");
 const scoreE = new ScoreE(scoreDom, 0);
 let isGameOver = false;
@@ -89,17 +91,47 @@ function handleReplay() {
     groundE.moving();
     updateGame();
 }
-document.addEventListener("keydown", function (event) {
-    if (event.key === "ArrowUp") {
-        if (isGameOver) {
-            handleReplay();
+function applyEvent() {
+    document.addEventListener("keydown", function (event) {
+        if (event.key === controllE.getJumpKey().getKey()) {
+            if (isGameOver) {
+                handleReplay();
+            }
+            bird.jump();
         }
-        bird.jump();
-    }
-});
+    });
+}
 startGame.addEventListener("click", (e) => {
     gameLobby.style.display = "none";
     generateObstruction();
     updateGame();
+    applyEvent();
+});
+const optionDoms = document.querySelectorAll(".setting_option_choice");
+optionDoms.forEach((opt) => {
+    opt.addEventListener("keydown", (e) => {
+        e.preventDefault();
+        const event = e;
+        const dom = e.target;
+        dom.value = event.key;
+        switch (dom.getAttribute("data-action")) {
+            case controllE.getJumpKey().getName():
+                controllE.getJumpKey().setKey(event.key);
+                break;
+            default:
+                break;
+        }
+    });
+});
+const settingGameDom = document.querySelector(".setting_game");
+const gameSettingDom = document.querySelector(".game_setting");
+const settingSaveDom = document.querySelector(".setting_save");
+settingSaveDom.addEventListener("click", (e) => {
+    gameSettingDom.style.display = "none";
+    gameLobby.style.display = "grid";
+});
+settingGameDom.addEventListener("click", e => {
+    gameLobby.style.display = "none";
+    gameSettingDom.style.display = "grid";
 });
 //# sourceMappingURL=script.js.map

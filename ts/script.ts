@@ -6,7 +6,9 @@ import { BirdE } from "./entities/obstruction/BirdE.js";
 import { GroundE } from "./entities/obstruction/GroundE.js";
 import { PipeE } from "./entities/obstruction/PipeE.js";
 import { PlantE } from "./entities/obstruction/PlantE.js";
+import { Controll } from "./Controll.js";
 import { ScoreE } from "./entities/widget/ScoreE.js";
+import { ControllE } from "./entities/widget/ControllE.js";
 
 const gameOver: HTMLDivElement = document.querySelector(".game_over") as HTMLDivElement;
 const groundHeight = 30;
@@ -19,9 +21,9 @@ const canvas = new Canvas(
 );
 const birdE = new BirdE(canvas);
 const bird = birdE.getBird();
-
+const controllE = new ControllE();
 const scoreDom = document.querySelector(".score") as HTMLDivElement;
-const scoreE = new ScoreE(scoreDom, 0)
+const scoreE = new ScoreE(scoreDom, 0);
 let isGameOver = false;
 let pipes: Pipe[] = [];
 let trees: Plant[] = [];
@@ -29,7 +31,7 @@ let obstructions: (Pipe | Plant)[] = [];
 const pipeE = new PipeE(canvas);
 const plantE = new PlantE(canvas, groundHeight);
 const grounds = document.querySelectorAll(".ground") as NodeListOf<Element>;
-const groundE = new GroundE(grounds)
+const groundE = new GroundE(grounds);
 const startGame = document.querySelector(".start_game") as HTMLButtonElement;
 const gameLobby = document.querySelector(".game_lobby") as HTMLDivElement;
 
@@ -57,7 +59,7 @@ function handleGameOver() {
 	bird.draw(canvas.context);
 	isGameOver = true;
 	gameOver.style.display = "grid";
-	groundE.stopMoving()
+	groundE.stopMoving();
 }
 
 function updateGame() {
@@ -108,20 +110,50 @@ function handleReplay() {
 	bird.setY(canvas.halfHeight);
 	bird.setVelocity(0);
 	gameOver.style.display = "none";
-	groundE.moving()
+	groundE.moving();
 	updateGame();
 }
-document.addEventListener("keydown", function (event) {
-	if (event.key === "ArrowUp") {
-		if (isGameOver) {
-			handleReplay();
+function applyEvent(){
+	document.addEventListener("keydown", function (event) {
+		if (event.key === controllE.getJumpKey().getKey()) {
+			if (isGameOver) {
+				handleReplay();
+			}
+			bird.jump();
 		}
-		bird.jump();
-	}
-});
-
+	});
+}
 startGame.addEventListener("click", (e) => {
 	gameLobby.style.display = "none";
 	generateObstruction();
 	updateGame();
+	applyEvent()
 });
+
+const optionDoms = document.querySelectorAll(".setting_option_choice");
+optionDoms.forEach((opt) => {
+	opt.addEventListener("keydown", (e) => {
+		e.preventDefault();
+		const event = e as KeyboardEvent;
+		const dom = e.target as HTMLInputElement;
+		dom.value = event.key;
+		switch (dom.getAttribute("data-action")) {
+			case controllE.getJumpKey().getName():
+				controllE.getJumpKey().setKey(event.key);
+				break;
+			default:
+				break;
+		}
+	});
+});
+const settingGameDom = document.querySelector(".setting_game") as HTMLDivElement;
+const gameSettingDom = document.querySelector(".game_setting") as HTMLDivElement;
+const settingSaveDom = document.querySelector(".setting_save") as HTMLButtonElement;
+settingSaveDom.addEventListener("click", (e) => {
+	gameSettingDom.style.display = "none";
+	gameLobby.style.display = "grid"
+});
+settingGameDom.addEventListener("click", e=>{
+	gameLobby.style.display = "none"
+	gameSettingDom.style.display = "grid"
+})

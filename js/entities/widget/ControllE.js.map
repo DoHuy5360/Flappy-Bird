@@ -1,0 +1,1 @@
+{"version":3,"file":"ControllE.js","sourceRoot":"","sources":["../../../ts/entities/widget/ControllE.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,QAAQ,EAAE,MAAM,mBAAmB,CAAC;AAE7C,MAAM,OAAO,SAAS;IAElB;QADQ,aAAQ,GAAG,IAAI,QAAQ,CAAC,WAAW,EAAE,SAAS,CAAC,CAAA;IAGvD,CAAC;IACD,UAAU;QACN,OAAO,IAAI,CAAC,QAAQ,CAAA;IACxB,CAAC;CACJ"}
