@@ -8,6 +8,7 @@ export class ObstructionObject {
 	public color: string;
 	public imagePath: string;
 	public image: HTMLImageElement;
+	public isCollidable: boolean;
 	constructor(
 		x: number,
 		y: number,
@@ -16,7 +17,8 @@ export class ObstructionObject {
 		speed: number,
 		location: string,
 		color: string,
-		imagePath: string
+		imagePath: string,
+		isCollidable: boolean
 	) {
 		this.x = x;
 		this.y = y;
@@ -27,19 +29,12 @@ export class ObstructionObject {
 		this.color = color;
 		this.imagePath = imagePath;
 		this.image = new Image();
-		this.image.src = "./imgs/objects/obstructions/woodenLog/" + this.imagePath;
+		this.isCollidable = isCollidable;
 	}
 	// draw(context: CanvasRenderingContext2D) {
 	// 	context.fillStyle = this.color;
 	// 	context.fillRect(this.x, this.y, this.width, this.height);
 	// }
-	draw(context: CanvasRenderingContext2D) {
-		context.fillStyle = this.color;
-		// context.fillRect(this.x, this.y, this.width, this.height);
-		for (let i = 0; i < this.height / this.width; i++) {
-			context.drawImage(this.image, this.x, this.y + this.width * i, this.width, this.width);
-		}
-	}
 	backLeft() {
 		this.x -= this.speed;
 	}
