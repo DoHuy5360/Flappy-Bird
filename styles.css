@@ -10,7 +10,7 @@ body {
 }
 #gameCanvas {
 	background-image: url(./imgs/objects/backgrounds/skys/sky.jpg);
-	background-position: center;
+	background-position: top;
 	background-size: cover;
 	background-repeat: no-repeat;
 }
