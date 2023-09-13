@@ -5,6 +5,7 @@ export class Canvas {
         this.height = height;
         dom.width = width;
         dom.height = height;
+        this.halfHeight = this.height / 2;
         this.context = this.dom.getContext("2d");
     }
     clearScreen() {

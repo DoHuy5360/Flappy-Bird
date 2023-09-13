@@ -63,4 +63,10 @@ export class FlyingObject {
 		context.fillStyle = this.color;
 		context.drawImage(this.image, this.x, this.y, this.width, this.height);
 	}
+	setY(newY: number): void {
+		this.y = newY;
+	}
+	setVelocity(newVelocity: number) : void{
+		this.velocity = newVelocity
+	}
 }

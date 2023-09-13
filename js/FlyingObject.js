@@ -36,5 +36,11 @@ export class FlyingObject {
         context.fillStyle = this.color;
         context.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
+    setY(newY) {
+        this.y = newY;
+    }
+    setVelocity(newVelocity) {
+        this.velocity = newVelocity;
+    }
 }
 //# sourceMappingURL=FlyingObject.js.map

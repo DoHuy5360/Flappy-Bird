@@ -2,148 +2,63 @@ import { Bird } from "./Bird.js";
 import { Canvas } from "./Canvas.js";
 import { Pipe } from "./Pipe.js";
 import { Plant } from "./Plant.js";
+import { BirdE } from "./entities/obstruction/BirdE.js";
+import { GroundE } from "./entities/obstruction/GroundE.js";
+import { PipeE } from "./entities/obstruction/PipeE.js";
+import { PlantE } from "./entities/obstruction/PlantE.js";
+import { ScoreE } from "./entities/widget/ScoreE.js";
 
 const gameOver: HTMLDivElement = document.querySelector(".game_over") as HTMLDivElement;
 const groundHeight = 30;
 const canvasDom = document.getElementById("gameCanvas") as HTMLCanvasElement;
+
 const canvas = new Canvas(
 	canvasDom, //* dom
 	window.innerWidth, //* width
 	window.innerHeight - groundHeight //* height
 );
+const birdE = new BirdE(canvas);
+const bird = birdE.getBird();
 
-const bird = new Bird(
-	50, //* x
-	canvas.height / 2, //* y
-	30, //* width
-	30, //* height
-	1, //* gravity
-	0, //* velocity
-	-15, //* initialJumpHeight
-	"yellow", //* color
-	"angryBird.svg" //* imagePath
-);
+const scoreDom = document.querySelector(".score") as HTMLDivElement;
+const scoreE = new ScoreE(scoreDom, 0)
 let isGameOver = false;
 let pipes: Pipe[] = [];
 let trees: Plant[] = [];
 let obstructions: (Pipe | Plant)[] = [];
-setInterval(() => {
-	const gap = 300;
-	const topColHeight = Math.floor(Math.random() * Math.floor(canvas.height / 50)) * 50;
-	const botColHeight = canvas.height - topColHeight - gap;
-	const topPipe = new Pipe(
-		canvas.width, //* x
-		0, //* y
-		50, //* width
-		topColHeight, //* height
-		2, //* speed
-		"top", //* location
-		"green", //* color
-		"log_04.png", //* imagePath
-		true //* isCollidable
-	);
-	const botPipe = new Pipe(
-		canvas.width, //* x
-		canvas.height - botColHeight, //* y
-		50, //* width
-		botColHeight, //* height
-		2, //* speed
-		"bottom", //* location
-		"green", //* color
-		"log_04.png", //* imagePath
-		true //* isCollidable
-	);
-	// pipes.push(topPipe, botPipe);
-	obstructions.push(topPipe, botPipe);
-}, 2000);
-setInterval(() => {
-	const treeHeight01 = 300;
-	const tree01 = new Plant(
-		canvas.width, //* x
-		canvas.height - treeHeight01 + groundHeight, //* y
-		treeHeight01, //* width
-		treeHeight01, //* height
-		1, //* speed
-		"bottom", //* location
-		"green", //* color
-		"/trees/tree_01.svg", //* imagePath
-		false //* isCollidable
-	);
-	const treeHeight02 = 400;
-	const tree02 = new Plant(
-		canvas.width, //* x
-		canvas.height - treeHeight02 + groundHeight, //* y
-		treeHeight02, //* width
-		treeHeight02, //* height
-		1, //* speed
-		"bottom", //* location
-		"green", //* color
-		"/trees/tree_02.svg", //* imagePath
-		false //* isCollidable
-	);
-	const treeHeight03 = 500;
-	const tree03 = new Plant(
-		canvas.width, //* x
-		canvas.height - treeHeight03 + groundHeight, //* y
-		treeHeight03, //* width
-		treeHeight03, //* height
-		1, //* speed
-		"bottom", //* location
-		"green", //* color
-		"/trees/tree_03.svg", //* imagePath
-		false //* isCollidable
-	);
-	const grassHeight01 = 80;
-	const grass01 = new Plant(
-		canvas.width, //* x
-		canvas.height - grassHeight01 + groundHeight, //* y
-		grassHeight01, //* width
-		grassHeight01, //* height
-		1, //* speed
-		"bottom", //* location
-		"green", //* color
-		"/grass/grass_01.svg", //* imagePath
-		false //* isCollidable
-	);
-	const grassHeight02 = 80;
-	const grass02 = new Plant(
-		canvas.width, //* x
-		canvas.height - grassHeight02 + groundHeight, //* y
-		grassHeight02, //* width
-		grassHeight02, //* height
-		1, //* speed
-		"bottom", //* location
-		"green", //* color
-		"/grass/grass_02.svg", //* imagePath
-		false //* isCollidable
-	);
-	const grassHeight03 = 80;
-	const grass03 = new Plant(
-		canvas.width, //* x
-		canvas.height - grassHeight03 + groundHeight, //* y
-		grassHeight03, //* width
-		grassHeight03, //* height
-		1, //* speed
-		"bottom", //* location
-		"green", //* color
-		"/grass/grass_03.svg", //* imagePath
-		false //* isCollidable
-	);
-	trees = [tree01, tree02, tree03, grass01, grass02, grass03];
-	obstructions.push(trees[Math.floor(Math.random() * trees.length)]);
-}, 7000);
+const pipeE = new PipeE(canvas);
+const plantE = new PlantE(canvas, groundHeight);
+const grounds = document.querySelectorAll(".ground") as NodeListOf<Element>;
+const groundE = new GroundE(grounds)
+const startGame = document.querySelector(".start_game") as HTMLButtonElement;
+const gameLobby = document.querySelector(".game_lobby") as HTMLDivElement;
 
-const grounds = document.querySelectorAll(".ground");
+function generateObstruction() {
+	setInterval(() => {
+		obstructions.push(pipeE.getTopPipe(), pipeE.getBotPipe());
+		pipeE.setRandomPipeHeight();
+	}, 2000);
+
+	setInterval(() => {
+		trees = [
+			plantE.getPlant01(),
+			plantE.getPlant02(),
+			plantE.getPlant03(),
+			plantE.getPlant04(),
+			plantE.getPlant05(),
+			plantE.getPlant06(),
+		];
+		obstructions.push(trees[Math.floor(Math.random() * trees.length)]);
+	}, 7000);
+}
+
 function handleGameOver() {
 	bird.update(canvas.dom);
 	bird.draw(canvas.context);
 	isGameOver = true;
 	gameOver.style.display = "grid";
-	grounds[0].classList.add("stop");
-	grounds[1].classList.add("stop");
+	groundE.stopMoving()
 }
-let scores: number = 0;
-const score = document.querySelector(".score") as HTMLDivElement;
 
 function updateGame() {
 	canvas.clearScreen();
@@ -160,8 +75,7 @@ function updateGame() {
 			i--;
 		}
 		if (p.isCollidable && bird.x >= p.x + p.width && bird.x + bird.width <= p.x + p.width + bird.width + 1) {
-			scores += 0.5;
-			score.textContent = scores.toString();
+			scoreE.addScore(0.5);
 		}
 		//todo: Track bird is collide the pipe
 		if (p.isCollidable) {
@@ -188,16 +102,14 @@ function updateGame() {
 	requestAnimationFrame(updateGame);
 }
 function handleReplay() {
-	scores = 0;
-	score.textContent = "0";
 	obstructions = [];
-	bird.y = canvas.height / 2;
-	bird.velocity = 0;
-	updateGame();
 	isGameOver = false;
+	scoreE.setScore(0);
+	bird.setY(canvas.halfHeight);
+	bird.setVelocity(0);
 	gameOver.style.display = "none";
-	grounds[0].classList.remove("stop");
-	grounds[1].classList.remove("stop");
+	groundE.moving()
+	updateGame();
 }
 document.addEventListener("keydown", function (event) {
 	if (event.key === "ArrowUp") {
@@ -207,9 +119,9 @@ document.addEventListener("keydown", function (event) {
 		bird.jump();
 	}
 });
-const startGame = document.querySelector(".start_game") as HTMLButtonElement;
-const gameLobby = document.querySelector(".game_lobby") as HTMLDivElement;
+
 startGame.addEventListener("click", (e) => {
 	gameLobby.style.display = "none";
+	generateObstruction();
 	updateGame();
 });

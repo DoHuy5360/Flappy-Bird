@@ -2,6 +2,7 @@ export class Canvas {
 	public dom: HTMLCanvasElement;
 	public width: number;
 	public height: number;
+	public halfHeight: number;
 	public context!: CanvasRenderingContext2D;
 	constructor(dom: HTMLCanvasElement, width: number, height: number) {
 		this.dom = dom;
@@ -9,6 +10,7 @@ export class Canvas {
 		this.height = height;
 		dom.width = width;
 		dom.height = height;
+		this.halfHeight = this.height / 2
 		this.context = this.dom!.getContext("2d") as CanvasRenderingContext2D;
 	}
 	clearScreen() {
