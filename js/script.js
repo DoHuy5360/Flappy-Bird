@@ -100,5 +100,10 @@ document.addEventListener("keydown", function (event) {
         bird.jump();
     }
 });
-updateGame();
+const startGame = document.querySelector(".start_game");
+const gameLobby = document.querySelector(".game_lobby");
+startGame.addEventListener("click", (e) => {
+    gameLobby.style.display = "none";
+    updateGame();
+});
 //# sourceMappingURL=script.js.map

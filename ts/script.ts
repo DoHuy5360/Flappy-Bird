@@ -207,4 +207,9 @@ document.addEventListener("keydown", function (event) {
 		bird.jump();
 	}
 });
-updateGame();
+const startGame = document.querySelector(".start_game") as HTMLButtonElement;
+const gameLobby = document.querySelector(".game_lobby") as HTMLDivElement;
+startGame.addEventListener("click", (e) => {
+	gameLobby.style.display = "none";
+	updateGame();
+});
