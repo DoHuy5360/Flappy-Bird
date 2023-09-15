@@ -122,8 +122,8 @@ body {
 	display: flex;
 	gap: 10px;
 }
-.game_over .message img {
-	width: 1rem;
+.game_over .key_jump {
+	font-weight: bold;
 }
 .scores_table {
 	position: absolute;

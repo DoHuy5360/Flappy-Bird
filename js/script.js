@@ -5,108 +5,38 @@ import { PipeE } from "./entities/obstruction/PipeE.js";
 import { PlantE } from "./entities/obstruction/PlantE.js";
 import { ScoreE } from "./entities/widget/ScoreE.js";
 import { ControllE } from "./entities/widget/ControllE.js";
-const gameOver = document.querySelector(".game_over");
-const groundHeight = 30;
-const canvasDom = document.getElementById("gameCanvas");
-const canvas = new Canvas(canvasDom, window.innerWidth, window.innerHeight - groundHeight);
+import { GameLobby } from "./entities/widget/GameLobby.js";
+import { PlayGame } from "./entities/widget/actions/PlayGame.js";
+import { SettingGame } from "./entities/widget/actions/SettingGame.js";
+import { GameStatus } from "./entities/widget/GameStatus.js";
+import { GameOver } from "./entities/widget/GameOver.js";
+import { Game } from "./entities/widget/Game.js";
+import { ObstructionE } from "./entities/widget/ObstructionE.js";
+import { GameEvent } from "./entities/widget/GameEvent.js";
+import { GameSetting } from "./entities/widget/GameSetting.js";
+import { SaveSetting } from "./entities/widget/actions/SaveSetting.js";
+const gameOverE = new GameOver(document.querySelector(".game_over"));
+const groundE = new GroundE(document.querySelectorAll(".ground"), 30);
+const canvas = new Canvas(document.getElementById("gameCanvas"), window.innerWidth, window.innerHeight - groundE.getHeight());
 const birdE = new BirdE(canvas);
 const bird = birdE.getBird();
 const controllE = new ControllE();
-const scoreDom = document.querySelector(".score");
-const scoreE = new ScoreE(scoreDom, 0);
-let isGameOver = false;
-let pipes = [];
-let trees = [];
-let obstructions = [];
+const scoreE = new ScoreE(document.querySelector(".score"), 0);
+const gameStatusE = new GameStatus(false, gameOverE, scoreE, canvas, bird, groundE);
 const pipeE = new PipeE(canvas);
-const plantE = new PlantE(canvas, groundHeight);
-const grounds = document.querySelectorAll(".ground");
-const groundE = new GroundE(grounds);
-const startGame = document.querySelector(".start_game");
+const plantE = new PlantE(canvas, groundE.getHeight());
 const gameLobby = document.querySelector(".game_lobby");
-function generateObstruction() {
-    setInterval(() => {
-        obstructions.push(pipeE.getTopPipe(), pipeE.getBotPipe());
-        pipeE.setRandomPipeHeight();
-    }, 2000);
-    setInterval(() => {
-        trees = [
-            plantE.getPlant01(),
-            plantE.getPlant02(),
-            plantE.getPlant03(),
-            plantE.getPlant04(),
-            plantE.getPlant05(),
-            plantE.getPlant06(),
-        ];
-        obstructions.push(trees[Math.floor(Math.random() * trees.length)]);
-    }, 7000);
-}
-function handleGameOver() {
-    bird.update(canvas.dom);
-    bird.draw(canvas.context);
-    isGameOver = true;
-    gameOver.style.display = "grid";
-    groundE.stopMoving();
-}
-function updateGame() {
-    canvas.clearScreen();
-    for (var i = 0; i < obstructions.length; i++) {
-        var p = obstructions[i];
-        p.draw(canvas.context);
-        p.backLeft();
-        if (p.x + p.width < 0) {
-            obstructions.splice(i, 1);
-            i--;
-        }
-        if (p.isCollidable && bird.x >= p.x + p.width && bird.x + bird.width <= p.x + p.width + bird.width + 1) {
-            scoreE.addScore(0.5);
-        }
-        if (p.isCollidable) {
-            if ((bird.x + bird.width > p.x && bird.x + bird.width < p.x + p.width) ||
-                (bird.x + bird.width > p.x && bird.x < p.x + p.width)) {
-                if (p.location === "top" && bird.y < p.height) {
-                    console.log("Hiting top");
-                    handleGameOver();
-                    return;
-                }
-                if (p.location === "bottom" && bird.y + bird.height > p.y) {
-                    console.log("Hiting bottom");
-                    handleGameOver();
-                    return;
-                }
-            }
-        }
-    }
-    bird.update(canvas.dom);
-    bird.draw(canvas.context);
-    requestAnimationFrame(updateGame);
-}
-function handleReplay() {
-    obstructions = [];
-    isGameOver = false;
-    scoreE.setScore(0);
-    bird.setY(canvas.halfHeight);
-    bird.setVelocity(0);
-    gameOver.style.display = "none";
-    groundE.moving();
-    updateGame();
-}
-function applyEvent() {
-    document.addEventListener("keydown", function (event) {
-        if (event.key === controllE.getJumpKey().getKey()) {
-            if (isGameOver) {
-                handleReplay();
-            }
-            bird.jump();
-        }
-    });
-}
-startGame.addEventListener("click", (e) => {
-    gameLobby.style.display = "none";
-    generateObstruction();
-    updateGame();
-    applyEvent();
-});
+const obstructionE = new ObstructionE(pipeE, plantE);
+const gameE = new Game(canvas, bird, scoreE, gameStatusE, obstructionE.getOstruction());
+const gameEventE = new GameEvent(controllE, gameStatusE, obstructionE, gameE, bird);
+const gameLobbyE = new GameLobby(document.querySelector(".game_lobby"));
+const gameSettingE = new GameSetting(document.querySelector(".game_setting"));
+const playGameBtn = new PlayGame(document.querySelector(".start_game"), gameLobbyE, obstructionE, gameE, gameEventE);
+playGameBtn.apply();
+const settingGameBtn = new SettingGame(document.querySelector(".setting_game"), gameLobbyE, gameSettingE);
+settingGameBtn.apply();
+const saveSettingBtn = new SaveSetting(document.querySelector(".setting_save"), gameLobbyE, gameSettingE);
+saveSettingBtn.apply();
 const optionDoms = document.querySelectorAll(".setting_option_choice");
 optionDoms.forEach((opt) => {
     opt.addEventListener("keydown", (e) => {
@@ -122,16 +52,5 @@ optionDoms.forEach((opt) => {
                 break;
         }
     });
-});
-const settingGameDom = document.querySelector(".setting_game");
-const gameSettingDom = document.querySelector(".game_setting");
-const settingSaveDom = document.querySelector(".setting_save");
-settingSaveDom.addEventListener("click", (e) => {
-    gameSettingDom.style.display = "none";
-    gameLobby.style.display = "grid";
-});
-settingGameDom.addEventListener("click", e => {
-    gameLobby.style.display = "none";
-    gameSettingDom.style.display = "grid";
 });
 //# sourceMappingURL=script.js.map

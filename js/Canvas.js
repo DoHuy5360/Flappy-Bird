@@ -11,5 +11,14 @@ export class Canvas {
     clearScreen() {
         this.context.clearRect(0, 0, this.width, this.height);
     }
+    getDom() {
+        return this.dom;
+    }
+    getContext() {
+        return this.context;
+    }
+    getHalfHeight() {
+        return this.halfHeight;
+    }
 }
 //# sourceMappingURL=Canvas.js.map

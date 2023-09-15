@@ -4,36 +4,30 @@ export class PlantE {
         this.imagePath = "imgs/objects/obstructions/trees/";
         this.canvas = canvas;
         this.groundHeight = groundHeight;
+        this.tree01 = new Plant(this.canvas.width, this.canvas.height - 300 + this.groundHeight, 300, 300, 1, "bottom", "green", "/trees/tree_01.svg", false);
+        this.tree02 = new Plant(this.canvas.width, this.canvas.height - 400 + this.groundHeight, 400, 400, 1, "bottom", "green", "/trees/tree_02.svg", false);
+        this.tree03 = new Plant(this.canvas.width, this.canvas.height - 500 + this.groundHeight, 500, 500, 1, "bottom", "green", "/trees/tree_03.svg", false);
+        this.grass01 = new Plant(this.canvas.width, this.canvas.height - 80 + this.groundHeight, 80, 80, 1, "bottom", "green", "/grass/grass_01.svg", false);
+        this.grass02 = new Plant(this.canvas.width, this.canvas.height - 90 + this.groundHeight, 90, 90, 1, "bottom", "green", "/grass/grass_02.svg", false);
+        this.grass03 = new Plant(this.canvas.width, this.canvas.height - 100 + this.groundHeight, 100, 100, 1, "bottom", "green", "/grass/grass_03.svg", false);
     }
     getPlant01() {
-        const treeHeight01 = 300;
-        const tree01 = new Plant(this.canvas.width, this.canvas.height - treeHeight01 + this.groundHeight, treeHeight01, treeHeight01, 1, "bottom", "green", "/trees/tree_01.svg", false);
-        return tree01;
+        return this.tree01;
     }
     getPlant02() {
-        const treeHeight02 = 400;
-        const tree02 = new Plant(this.canvas.width, this.canvas.height - treeHeight02 + this.groundHeight, treeHeight02, treeHeight02, 1, "bottom", "green", "/trees/tree_02.svg", false);
-        return tree02;
+        return this.tree02;
     }
     getPlant03() {
-        const treeHeight03 = 500;
-        const tree03 = new Plant(this.canvas.width, this.canvas.height - treeHeight03 + this.groundHeight, treeHeight03, treeHeight03, 1, "bottom", "green", "/trees/tree_03.svg", false);
-        return tree03;
+        return this.tree03;
     }
     getPlant04() {
-        const grassHeight01 = 80;
-        const grass01 = new Plant(this.canvas.width, this.canvas.height - grassHeight01 + this.groundHeight, grassHeight01, grassHeight01, 1, "bottom", "green", "/grass/grass_01.svg", false);
-        return grass01;
+        return this.grass01;
     }
     getPlant05() {
-        const grassHeight02 = 80;
-        const grass02 = new Plant(this.canvas.width, this.canvas.height - grassHeight02 + this.groundHeight, grassHeight02, grassHeight02, 1, "bottom", "green", "/grass/grass_02.svg", false);
-        return grass02;
+        return this.grass02;
     }
     getPlant06() {
-        const grassHeight03 = 80;
-        const grass03 = new Plant(this.canvas.width, this.canvas.height - grassHeight03 + this.groundHeight, grassHeight03, grassHeight03, 1, "bottom", "green", "/grass/grass_03.svg", false);
-        return grass03;
+        return this.grass03;
     }
 }
 //# sourceMappingURL=PlantE.js.map
