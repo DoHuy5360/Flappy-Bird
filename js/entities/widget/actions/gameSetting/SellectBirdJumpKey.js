@@ -3,6 +3,7 @@ export class SellectBirdJumpKey {
         this.dom = dom;
         this.bird = bird;
         this.replayPressE = replayPressE;
+        this.dom.value = this.bird.getJumpValue();
     }
     apply() {
         this.dom.addEventListener("keydown", (e) => {
