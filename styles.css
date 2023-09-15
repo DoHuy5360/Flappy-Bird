@@ -8,6 +8,7 @@
 body {
 	overflow: hidden;
 }
+
 /* * game lobby */
 
 .game_lobby {
@@ -23,12 +24,12 @@ body {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
+	padding: 15px;
 }
 .game_lobby .game_name {
-	font-size: 3rem;
+	font-size: 2.5rem;
 	font-weight: bold;
 	color: white;
-	filter: drop-shadow(0 0.125rem 0.25rem #1b1b1bc8);
 }
 .game_lobby .game_options {
 	display: flex;
@@ -39,6 +40,11 @@ body {
 .game_lobby button {
 	all: unset;
 	cursor: pointer;
+	background-color: white;
+	padding: 5px;
+	font-size: .8rem;
+	width: 70px;
+	text-align: center;
 }
 
 /* * Setting */
@@ -47,7 +53,7 @@ body {
 	position: fixed;
 	width: 100%;
 	height: 100vh;
-	display: none;
+	display: grid;
 	place-items: center;
 	backdrop-filter: blur(2px);
 	z-index: 4;
@@ -56,18 +62,17 @@ body {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+	background-color: #5AC3E3;
+	padding: 15px;
 }
 .game_setting .setting_title{
-	font-size: 3rem;
+	font-size: 2.5rem;
 	font-weight: bold;
 	color: white;
-	filter: drop-shadow(0 0.125rem 0.25rem #1b1b1bc8);
 }
 .game_setting .setting_options_list{
 	display: flex;
 	flex-direction: column;
-	background-color: white;
-	padding: 10px;
 	border-radius: 3px;
 	gap: 10px;
 }
@@ -76,15 +81,32 @@ body {
 	gap: 10px;
 	align-items: center;
 }
-.game_setting .options_title{
+.game_setting .options_name{
 	font-weight: bold;
+	color: white;
 }
 .game_setting .setting_option_choice{
 	padding: 5px;
+	border: unset;
+	outline: unset;
+	height: 100%;
+	font-size: .8rem;
 }
 .game_setting .setting_save{
 	all: unset;
 	cursor: pointer;
+	background-color: white;
+	padding: 5px;
+	width: fit-content;
+	font-size: .8rem;
+}
+.game_setting .mouse_option{
+	all: unset;
+	cursor: pointer;
+	background-color: white;
+	padding: 5px;
+	font-size: .8rem;
+	
 }
 /* * canvas */
 #gameCanvas {
