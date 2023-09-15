@@ -1,7 +1,7 @@
-import { GameLobby } from "../GameLobby.js";
-import { GameSetting } from "../GameSetting.js";
+import { GameLobby } from "../../GameLobby.js";
+import { GameSetting } from "../../GameSetting.js";
 
-export class SaveSetting {
+export class SettingGame {
 	private dom: HTMLButtonElement;
 	private gameLobbyE: GameLobby;
 	private gameSettingE: GameSetting;
@@ -12,8 +12,8 @@ export class SaveSetting {
 	}
 	apply() {
 		this.dom.addEventListener("click", (e) => {
-			this.gameSettingE.setInvisible();
-			this.gameLobbyE.setVisible();
+			this.gameLobbyE.setInvisible();
+			this.gameSettingE.setVisible();
 		});
 	}
 }

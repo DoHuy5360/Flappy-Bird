@@ -1,19 +1,19 @@
-import { GameLobby } from "../GameLobby.js";
-import { GameSetting } from "../GameSetting.js";
-import { BaseAction } from "./BaseAction.js";
+import { GameLobby } from "../../GameLobby.js";
+import { GameSetting } from "../../GameSetting.js";
 
-export class SettingGame extends BaseAction {
+export class SaveSetting {
+	private dom: HTMLButtonElement;
 	private gameLobbyE: GameLobby;
 	private gameSettingE: GameSetting;
 	constructor(dom: HTMLButtonElement, gameLobbyE: GameLobby, gameSettingE: GameSetting) {
-		super(dom);
+		this.dom = dom;
 		this.gameLobbyE = gameLobbyE;
 		this.gameSettingE = gameSettingE;
 	}
 	apply() {
 		this.dom.addEventListener("click", (e) => {
-			this.gameLobbyE.setInvisible();
-			this.gameSettingE.setVisible();
+			this.gameSettingE.setInvisible();
+			this.gameLobbyE.setVisible();
 		});
 	}
 }

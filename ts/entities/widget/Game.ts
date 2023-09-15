@@ -1,4 +1,4 @@
-import { Bird } from "../../Bird.js";
+import { Bird } from "../obstruction/Bird.js";
 import { Canvas } from "../../Canvas.js";
 import { Pipe } from "../../Pipe.js";
 import { Plant } from "../../Plant.js";
@@ -25,7 +25,7 @@ export class Game {
 		this.gameStatusE = gameStatusE;
 		this.obstructions = obstructions;
 	}
-	implement =()=> {
+	implement = () => {
 		this.canvas.clearScreen();
 
 		for (var i = 0; i < this.obstructions.length; i++) {
@@ -69,5 +69,5 @@ export class Game {
 		this.birdE.draw(this.canvas.context);
 
 		requestAnimationFrame(this.implement);
-	}
+	};
 }
