@@ -8,6 +8,9 @@
 body {
 	overflow: hidden;
 }
+:root {
+	--text-white: white;
+}
 
 /* * game lobby */
 
@@ -29,7 +32,8 @@ body {
 .game_lobby .game_name {
 	font-size: 2.5rem;
 	font-weight: bold;
-	color: white;
+	color: var(--text-white);
+	filter: drop-shadow(0 0.125rem 0.25rem #1b1b1bc8);
 }
 .game_lobby .game_options {
 	display: flex;
@@ -40,16 +44,16 @@ body {
 .game_lobby button {
 	all: unset;
 	cursor: pointer;
-	background-color: white;
 	padding: 5px;
-	font-size: .8rem;
 	width: 70px;
 	text-align: center;
+	color: var(--text-white);
+	filter: drop-shadow(0 0.125rem 0.25rem #1b1b1bc8);
 }
 
 /* * Setting */
 
-.game_setting{
+.game_setting {
 	position: fixed;
 	width: 100%;
 	height: 100vh;
@@ -58,55 +62,48 @@ body {
 	backdrop-filter: blur(2px);
 	z-index: 4;
 }
-.game_setting .center_window{
+.game_setting .center_window {
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
-	background-color: #5AC3E3;
-	padding: 15px;
+	gap: 20px;
+	background-color: #5ac3e3;
+	padding: 10px;
 }
-.game_setting .setting_title{
+.game_setting .setting_title {
 	font-size: 2.5rem;
 	font-weight: bold;
-	color: white;
+	color: var(--text-white);
+	filter: drop-shadow(0 0.125rem 0.25rem #1b1b1bc8);
 }
-.game_setting .setting_options_list{
+.game_setting .setting_options_list {
 	display: flex;
 	flex-direction: column;
 	border-radius: 3px;
 	gap: 10px;
 }
-.game_setting .setting_options{
+.game_setting .setting_options {
 	display: flex;
 	gap: 10px;
 	align-items: center;
 }
-.game_setting .options_name{
+.game_setting .options_name {
 	font-weight: bold;
-	color: white;
+	color: var(--text-white);
 }
-.game_setting .setting_option_choice{
+.game_setting .setting_option_choice {
 	padding: 5px;
 	border: unset;
 	outline: unset;
 	height: 100%;
-	font-size: .8rem;
+	font-size: 0.8rem;
 }
-.game_setting .setting_save{
+.game_setting .setting_save {
 	all: unset;
 	cursor: pointer;
-	background-color: white;
 	padding: 5px;
 	width: fit-content;
-	font-size: .8rem;
-}
-.game_setting .mouse_option{
-	all: unset;
-	cursor: pointer;
-	background-color: white;
-	padding: 5px;
-	font-size: .8rem;
-	
+	color: var(--text-white);
+	filter: drop-shadow(0 0.125rem 0.25rem #1b1b1bc8);
 }
 /* * canvas */
 #gameCanvas {
@@ -125,7 +122,7 @@ body {
 	position: absolute;
 	display: none;
 	place-items: center;
-	color: white;
+	color: var(--text-white);
 	backdrop-filter: blur(2px);
 	user-select: none;
 	z-index: 2;
@@ -151,7 +148,7 @@ body {
 	position: absolute;
 	display: block;
 	font-size: 1rem;
-	color: white;
+	color: var(--text-white);
 	display: flex;
 	gap: 3px;
 	padding: 3px;
