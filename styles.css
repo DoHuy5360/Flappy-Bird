@@ -105,16 +105,45 @@ body {
 	color: var(--text-white);
 	filter: drop-shadow(0 0.125rem 0.25rem #1b1b1bc8);
 }
+/* * Clouds */
+.clouds{
+	position: relative;
+	z-index: 1;
+}
+.clouds .tray{
+	position: absolute;
+	width: 100vw;
+	display: flex;
+	justify-content: space-between;
+	animation: move-back 10000ms infinite linear;
+}
+.clouds .current{
+	
+}
+.clouds .next{
+	left: 100%;
+}
+.clouds img:nth-child(odd){
+	position: relative;
+	width: 100px;
+	top: 50px;
+}
+.clouds img:nth-child(even){
+	position: relative;
+	width: 150px;
+}
 /* * canvas */
-#gameCanvas {
+.wrap_frame {
+	position: relative;
+	height: 100vh;
 	background-image: url(./imgs/objects/backgrounds/skys/sky.jpg);
 	background-position: top;
 	background-size: cover;
 	background-repeat: no-repeat;
 }
-.wrap_frame {
+#gameCanvas{
 	position: relative;
-	height: 100vh;
+	z-index: 2;
 }
 .game_over {
 	width: 100%;

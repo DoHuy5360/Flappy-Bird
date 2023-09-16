@@ -40,7 +40,7 @@ export class PipeE {
 			"bottom", //* location
 			"green", //* color
 			"log_04.png", //* imagePath
-			false //* isCollidable
+			true //* isCollidable
 		);
 		return botPipe;
 	}
