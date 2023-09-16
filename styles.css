@@ -154,7 +154,7 @@ body {
 	color: var(--text-white);
 	backdrop-filter: blur(2px);
 	user-select: none;
-	z-index: 2;
+	z-index: 3;
 }
 .game_over .message {
 	display: flex;
