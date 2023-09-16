@@ -15,7 +15,7 @@ export class PipeE {
         return topPipe;
     }
     getBotPipe() {
-        const botPipe = new Pipe(this.canvas.width, this.canvas.height - this.botColHeight, 50, this.botColHeight, 2, "bottom", "green", "log_04.png", true);
+        const botPipe = new Pipe(this.canvas.width, this.canvas.height - this.botColHeight, 50, this.botColHeight, 2, "bottom", "green", "log_04.png", false);
         return botPipe;
     }
 }

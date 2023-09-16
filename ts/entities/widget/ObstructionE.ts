@@ -32,6 +32,9 @@ export class ObstructionE {
 				this.plantE.getPlant04(),
 				this.plantE.getPlant05(),
 				this.plantE.getPlant06(),
+				this.plantE.getPlant07(),
+				this.plantE.getPlant08(),
+				this.plantE.getPlant09(),
 			];
 			this.obstructions.push(this.trees[Math.floor(Math.random() * this.trees.length)]);
 		}, 7000);

@@ -58,7 +58,7 @@ const gameStatusE = new GameStatus(
 	groundE //* groundE
 );
 const pipeE = new PipeE(canvasE);
-const plantE = new PlantE(canvasE, groundE.getHeight());
+const plantE = new PlantE(canvasE, groundE);
 
 const obstructionE = new ObstructionE(pipeE, plantE);
 const gameE = new Game(
