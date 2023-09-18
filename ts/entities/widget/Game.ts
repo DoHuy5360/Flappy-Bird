@@ -77,6 +77,7 @@ export class Game {
 		requestAnimationFrame(this.implement);
 	};
 	createScene() {
+		this.obstructionE.clearObstructions()
 		this.obstructionE.generateObstructions();
 	}
 	updateScene() {

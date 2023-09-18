@@ -31,7 +31,6 @@ export class GameEvent {
 				}
 				this.birdE.jump();
 			}
-			console.log(event.key);
 			if(["F12"].includes(event.key)){
 				event.preventDefault()
 			}

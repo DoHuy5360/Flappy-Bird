@@ -46,6 +46,7 @@ export class Game {
         this.obstructions = this.obstructionE.getOstruction();
     }
     createScene() {
+        this.obstructionE.clearObstructions();
         this.obstructionE.generateObstructions();
     }
     updateScene() {
