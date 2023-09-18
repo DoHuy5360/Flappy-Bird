@@ -81,7 +81,7 @@ export class Game {
 	}
 	updateScene() {
 		this.obstructionE.getOstruction().forEach((obs) => {
-			if (obs instanceof Plant) obs.updateY();
+			obs.updateY();
 		});
 	}
 }

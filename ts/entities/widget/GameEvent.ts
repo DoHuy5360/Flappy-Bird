@@ -31,8 +31,16 @@ export class GameEvent {
 				}
 				this.birdE.jump();
 			}
+			console.log(event.key);
+			if(["F12"].includes(event.key)){
+				event.preventDefault()
+			}
 		});
 		this.canvasE.getDom().addEventListener("click", (event) => {
+			this.birdE.jump();
+		});
+		this.canvasE.getDom().addEventListener("contextmenu", (event) => {
+			event.preventDefault()
 			this.birdE.jump();
 		});
 		window.addEventListener("blur", e=>{

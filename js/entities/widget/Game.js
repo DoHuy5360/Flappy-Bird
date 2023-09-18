@@ -1,4 +1,3 @@
-import { Plant } from "../../Plant.js";
 export class Game {
     constructor(canvas, birdE, scoreE, gameStatusE, obstructionE) {
         this.implement = () => {
@@ -51,8 +50,7 @@ export class Game {
     }
     updateScene() {
         this.obstructionE.getOstruction().forEach((obs) => {
-            if (obs instanceof Plant)
-                obs.updateY();
+            obs.updateY();
         });
     }
 }
