@@ -8,13 +8,15 @@ export class PipeE {
 	private topColHeight: number;
 	private botColHeight: number;
 	private totalColCell: number;
+	private startAxistX: number;
 	constructor(canvas: Canvas) {
 		this.canvas = canvas;
 		this.colCellHeight = 50;
 		this.gap = 5;
-		this.totalColCell = Math.floor(this.canvas.height / this.colCellHeight); // * 14 cells ~ 100% zoom
+		this.totalColCell = Math.floor(this.canvas.getHeight() / this.colCellHeight); // * 14 cells ~ 100% zoom
 		this.topColHeight = this.setRanTopColHeight();
 		this.botColHeight = this.setRanBotColHeight();
+		this.startAxistX = this.canvas.getWidth();
 	}
 	setRandomPipeHeight() {
 		this.topColHeight = this.setRanTopColHeight();
@@ -26,11 +28,14 @@ export class PipeE {
 		return (Math.round(Math.random() * maxColCell) + minColCell) * this.colCellHeight;
 	}
 	setRanBotColHeight() {
-		return this.canvas.height - this.topColHeight - this.colCellHeight * this.gap;
+		return this.canvas.getHeight() - this.topColHeight - this.colCellHeight * this.gap;
+	}
+	addRangeOfAxistX(gap: number) {
+		this.startAxistX += gap;
 	}
 	getTopPipe() {
 		const topPipe = new Pipe(
-			this.canvas.width, //* x
+			this.startAxistX, //* x
 			0, //* y
 			this.colCellHeight, //* width
 			this.topColHeight, //* height
@@ -44,15 +49,15 @@ export class PipeE {
 	}
 	getBotPipe() {
 		const botPipe = new Pipe(
-			this.canvas.width, //* x
-			this.canvas.height - this.botColHeight, //* y
+			this.startAxistX, //* x
+			this.canvas.getHeight() - this.botColHeight, //* y
 			this.colCellHeight, //* width
 			this.botColHeight, //* height
 			2, //* speed
 			"bottom", //* location
 			"green", //* color
 			"log_04.png", //* imagePath
-			true //* isCollidable
+			false //* isCollidable
 		);
 		return botPipe;
 	}

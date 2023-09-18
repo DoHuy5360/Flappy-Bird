@@ -20,5 +20,19 @@ export class Canvas {
     getHalfHeight() {
         return this.halfHeight;
     }
+    getWidth() {
+        return this.width;
+    }
+    getHeight() {
+        return this.height;
+    }
+    setWidth(newWidth) {
+        this.dom.width = newWidth;
+        this.width = newWidth;
+    }
+    setHeight(newHeight) {
+        this.dom.height = newHeight;
+        this.height = newHeight;
+    }
 }
 //# sourceMappingURL=Canvas.js.map

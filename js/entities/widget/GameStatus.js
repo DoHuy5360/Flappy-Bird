@@ -1,11 +1,18 @@
 export class GameStatus {
     constructor(isGameOver, gameOverScreen, gameScore, canvas, birdE, groundE) {
+        this.isGameRunning = false;
         this.isGameOver = isGameOver;
         this.gameOverScreen = gameOverScreen;
         this.gameScore = gameScore;
         this.canvas = canvas;
         this.birdE = birdE;
         this.groundE = groundE;
+    }
+    isRunning() {
+        return this.isGameRunning;
+    }
+    setGameRunning(status) {
+        this.isGameRunning = status;
     }
     getGameOver() {
         return this.isGameOver;

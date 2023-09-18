@@ -11,6 +11,7 @@ export class GameStatus {
 	private canvas: Canvas;
 	private birdE: Bird;
 	private groundE: GroundE;
+	private isGameRunning: boolean = false;
 	constructor(
 		isGameOver: boolean,
 		gameOverScreen: GameOver,
@@ -25,6 +26,12 @@ export class GameStatus {
 		this.canvas = canvas;
 		this.birdE = birdE;
 		this.groundE = groundE;
+	}
+	isRunning() {
+		return this.isGameRunning;
+	}
+	setGameRunning(status: boolean) {
+		this.isGameRunning = status;
 	}
 	getGameOver() {
 		return this.isGameOver;

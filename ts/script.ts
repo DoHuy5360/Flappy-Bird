@@ -17,11 +17,15 @@ import { Bird } from "./entities/obstruction/Bird.js";
 import { SellectBirdJumpKey } from "./entities/widget/actions/gameSetting/SellectBirdJumpKey.js";
 import { LocalStorage } from "./entities/widget/LocalStorage.js";
 import { ReplayPress } from "./entities/widget/actions/gameOver/ReplayPress.js";
+import { CloudE } from "./entities/obstruction/CloudE.js";
 
 const gameOverE = new GameOver(document.querySelector(".game_over") as HTMLDivElement);
 const groundE = new GroundE(
 	document.querySelectorAll(".ground"),
 	30 //* height
+);
+const cloudE = new CloudE(
+	document.querySelectorAll(".tray"),
 );
 const canvasE = new Canvas(
 	document.getElementById("gameCanvas") as HTMLCanvasElement, //* dom
@@ -39,15 +43,15 @@ const birdE = new Bird(
 	"yellow", //* color
 	"angryBird.svg", //* imagePath
 	{
-		jump : {
+		jump: {
 			key: "bird-jump",
-			value: "ArrowUp"
-		}
+			value: "ArrowUp",
+		},
 	} //* actions
 );
-const localStorageE = new LocalStorage(birdE)
-localStorageE.apply()
-const replayPressE = new ReplayPress(document.querySelector(".key_jump") as HTMLDivElement, birdE)
+const localStorageE = new LocalStorage(birdE);
+localStorageE.apply();
+const replayPressE = new ReplayPress(document.querySelector(".key_jump") as HTMLDivElement, birdE);
 const scoreE = new ScoreE(document.querySelector(".score") as HTMLDivElement, 0);
 const gameStatusE = new GameStatus(
 	false, //* isGameOver
@@ -60,27 +64,29 @@ const gameStatusE = new GameStatus(
 const pipeE = new PipeE(canvasE);
 const plantE = new PlantE(canvasE, groundE);
 
-const obstructionE = new ObstructionE(pipeE, plantE);
+const obstructionE = new ObstructionE(gameStatusE, pipeE, plantE);
+
 const gameE = new Game(
 	canvasE, //* canvas
 	birdE, //* birdE
 	scoreE, //* scoreE
 	gameStatusE, //* gameStatusE
-	obstructionE.getOstruction() //* obstructions
+	obstructionE //* obstructions
 );
 const gameEventE = new GameEvent(
 	canvasE, //* canvasE
+	groundE, //* groundE
+	cloudE, //* cloudE
 	birdE, //* birdE
 	gameStatusE, //* gameStatusE
-	obstructionE, //* obstructionE
 	gameE //* gameE
 );
 const gameLobbyE = new GameLobby(document.querySelector(".game_lobby") as HTMLDivElement);
 const gameSettingE = new GameSetting(document.querySelector(".game_setting") as HTMLDivElement);
 const playGameBtn = new PlayGame(
 	document.querySelector(".start_game") as HTMLButtonElement,
+	gameStatusE,
 	gameLobbyE,
-	obstructionE,
 	gameE,
 	gameEventE
 );
@@ -97,5 +103,9 @@ const saveSettingBtn = new SaveSetting(
 	gameSettingE
 );
 saveSettingBtn.apply();
-const setBirdJumpKey = new SellectBirdJumpKey(document.querySelector("#bird-jump") as HTMLInputElement, birdE, replayPressE);
+const setBirdJumpKey = new SellectBirdJumpKey(
+	document.querySelector("#bird-jump") as HTMLInputElement,
+	birdE,
+	replayPressE
+);
 setBirdJumpKey.apply();

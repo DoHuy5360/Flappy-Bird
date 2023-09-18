@@ -1,17 +1,19 @@
 export class PlayGame {
-    constructor(dom, gameLobby, obstructionE, gameE, gameEventE) {
+    constructor(dom, gameStatusE, gameLobby, gameE, gameEventE) {
         this.dom = dom;
+        this.gameStatusE = gameStatusE;
         this.gameLobby = gameLobby;
-        this.obstructionE = obstructionE;
         this.gameE = gameE;
         this.gameEventE = gameEventE;
     }
     apply() {
         this.dom.addEventListener("click", (e) => {
             this.gameLobby.setInvisible();
-            this.obstructionE.generateObstruction();
+            this.gameStatusE.setGameRunning(true);
             this.gameE.implement();
-            this.gameEventE.apply();
+            this.gameE.createScene();
+            this.gameEventE.applyKeyboardAndMouse();
+            this.gameEventE.allowResize();
         });
     }
 }

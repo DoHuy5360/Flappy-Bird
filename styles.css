@@ -106,29 +106,31 @@ body {
 	filter: drop-shadow(0 0.125rem 0.25rem #1b1b1bc8);
 }
 /* * Clouds */
-.clouds{
+.clouds {
 	position: relative;
 	z-index: 1;
 }
-.clouds .tray{
+.clouds .tray {
 	position: absolute;
 	width: 100vw;
 	display: flex;
 	justify-content: space-between;
-	animation: move-back 50000ms infinite linear;
+	animation: move-back 60000ms infinite linear;
 }
-.clouds .current{
-	
+.clouds .tray.stop {
+	animation: unset;
 }
-.clouds .next{
+.clouds .current {
+}
+.clouds .next {
 	left: 100%;
 }
-.clouds img:nth-child(odd){
+.clouds img:nth-child(odd) {
 	position: relative;
 	width: 100px;
 	top: 50px;
 }
-.clouds img:nth-child(even){
+.clouds img:nth-child(even) {
 	position: relative;
 	width: 150px;
 }
@@ -141,7 +143,7 @@ body {
 	background-size: cover;
 	background-repeat: no-repeat;
 }
-#gameCanvas{
+#gameCanvas {
 	position: relative;
 	z-index: 2;
 }

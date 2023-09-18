@@ -17,14 +17,16 @@ import { Bird } from "./entities/obstruction/Bird.js";
 import { SellectBirdJumpKey } from "./entities/widget/actions/gameSetting/SellectBirdJumpKey.js";
 import { LocalStorage } from "./entities/widget/LocalStorage.js";
 import { ReplayPress } from "./entities/widget/actions/gameOver/ReplayPress.js";
+import { CloudE } from "./entities/obstruction/CloudE.js";
 const gameOverE = new GameOver(document.querySelector(".game_over"));
 const groundE = new GroundE(document.querySelectorAll(".ground"), 30);
+const cloudE = new CloudE(document.querySelectorAll(".tray"));
 const canvasE = new Canvas(document.getElementById("gameCanvas"), window.innerWidth, window.innerHeight - groundE.getHeight());
 const birdE = new Bird(50, canvasE.getHalfHeight(), 30, 30, 1, 0, -15, "yellow", "angryBird.svg", {
     jump: {
         key: "bird-jump",
-        value: "ArrowUp"
-    }
+        value: "ArrowUp",
+    },
 });
 const localStorageE = new LocalStorage(birdE);
 localStorageE.apply();
@@ -33,12 +35,12 @@ const scoreE = new ScoreE(document.querySelector(".score"), 0);
 const gameStatusE = new GameStatus(false, gameOverE, scoreE, canvasE, birdE, groundE);
 const pipeE = new PipeE(canvasE);
 const plantE = new PlantE(canvasE, groundE);
-const obstructionE = new ObstructionE(pipeE, plantE);
-const gameE = new Game(canvasE, birdE, scoreE, gameStatusE, obstructionE.getOstruction());
-const gameEventE = new GameEvent(canvasE, birdE, gameStatusE, obstructionE, gameE);
+const obstructionE = new ObstructionE(gameStatusE, pipeE, plantE);
+const gameE = new Game(canvasE, birdE, scoreE, gameStatusE, obstructionE);
+const gameEventE = new GameEvent(canvasE, groundE, cloudE, birdE, gameStatusE, gameE);
 const gameLobbyE = new GameLobby(document.querySelector(".game_lobby"));
 const gameSettingE = new GameSetting(document.querySelector(".game_setting"));
-const playGameBtn = new PlayGame(document.querySelector(".start_game"), gameLobbyE, obstructionE, gameE, gameEventE);
+const playGameBtn = new PlayGame(document.querySelector(".start_game"), gameStatusE, gameLobbyE, gameE, gameEventE);
 playGameBtn.apply();
 const settingGameBtn = new SettingGame(document.querySelector(".setting_game"), gameLobbyE, gameSettingE);
 settingGameBtn.apply();

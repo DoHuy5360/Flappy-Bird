@@ -1,7 +1,8 @@
 export class ObstructionE {
-    constructor(pipeE, plantE) {
+    constructor(gameStatusE, pipeE, plantE) {
         this.obstructions = [];
         this.trees = [];
+        this.gameStatusE = gameStatusE;
         this.pipeE = pipeE;
         this.plantE = plantE;
     }
@@ -11,24 +12,30 @@ export class ObstructionE {
     clearObstructions() {
         this.obstructions.length = 0;
     }
-    generateObstruction() {
+    generateObstructions() {
         setInterval(() => {
-            this.obstructions.push(this.pipeE.getTopPipe(), this.pipeE.getBotPipe());
-            this.pipeE.setRandomPipeHeight();
+            if (this.gameStatusE.isRunning()) {
+                this.obstructions.push(this.pipeE.getTopPipe(), this.pipeE.getBotPipe());
+                this.pipeE.setRandomPipeHeight();
+                this.pipeE.addRangeOfAxistX(150);
+            }
         }, 2000);
         setInterval(() => {
-            this.trees = [
-                this.plantE.getPlant01(),
-                this.plantE.getPlant02(),
-                this.plantE.getPlant03(),
-                this.plantE.getPlant04(),
-                this.plantE.getPlant05(),
-                this.plantE.getPlant06(),
-                this.plantE.getPlant07(),
-                this.plantE.getPlant08(),
-                this.plantE.getPlant09(),
-            ];
-            this.obstructions.push(this.trees[Math.floor(Math.random() * this.trees.length)]);
+            if (this.gameStatusE.isRunning()) {
+                this.trees = [
+                    this.plantE.getPlant01(),
+                    this.plantE.getPlant02(),
+                    this.plantE.getPlant03(),
+                    this.plantE.getPlant04(),
+                    this.plantE.getPlant05(),
+                    this.plantE.getPlant06(),
+                    this.plantE.getPlant07(),
+                    this.plantE.getPlant08(),
+                    this.plantE.getPlant09(),
+                ];
+                this.obstructions.unshift(this.trees[Math.floor(Math.random() * this.trees.length)]);
+                this.plantE.addRangeOfAxistX(200);
+            }
         }, 7000);
     }
 }
