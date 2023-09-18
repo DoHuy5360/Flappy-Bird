@@ -29,7 +29,7 @@ export class PipeE {
         return topPipe;
     }
     getBotPipe() {
-        const botPipe = new Pipe(this.canvasE, this.startAxistX, this.canvasE.getHeight() - this.botColHeight, this.colCellHeight, this.botColHeight, 2, "bottom", "green", "log_04.png", false);
+        const botPipe = new Pipe(this.canvasE, this.startAxistX, this.canvasE.getHeight() - this.botColHeight, this.colCellHeight, this.botColHeight, 2, "bottom", "green", "log_04.png", true);
         return botPipe;
     }
 }
